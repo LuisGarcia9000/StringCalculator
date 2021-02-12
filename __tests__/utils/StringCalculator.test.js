@@ -85,3 +85,11 @@ test('Ejemplo requerido: 4-7+8+9/2*3 = 6.5', () => {
 test('Ejemplo requerido: 23-14+123/3*49 = 9.836734  ', () => {    
     expect(calc('23-14+123/3*49')).toBeCloseTo(9.836734)
 })
+
+test('Potencia: 9^2 = 81  ', () => {    
+    expect(calc('9^2')).toBe(81)
+})
+
+test('Potencia: 3*3^2 = 27  ', () => {    
+    expect(calc('3*3^2')).toBe(27)
+})

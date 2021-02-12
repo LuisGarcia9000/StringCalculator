@@ -1,6 +1,5 @@
 
-export function calc(stringOperation) {
-    console.log('stringOperation', stringOperation)
+export function calc(stringOperation) {    
     let total = 0
     let result = operation(stringOperation, '+', addition)
     if (result) {
@@ -17,6 +16,11 @@ export function calc(stringOperation) {
                 let result = operation(stringOperation, '*', multiplication)
                 if (result) {
                     total += result 
+                } else {
+                    let result = operation(stringOperation, '^', pow)
+                    if (result) {
+                        total += result 
+                    }
                 }
             }
         }
@@ -28,6 +32,7 @@ const addition = (a,b) => a+b
 const substraction = (a,b) => a-b
 const division = (a,b) => a/b
 const multiplication = (a,b) => a*b
+const pow = (a,b) => Math.pow(a, b)
 
 function operation(stringOperation, operator, operation) {
     let operationIndex = stringOperation.lastIndexOf(operator)
