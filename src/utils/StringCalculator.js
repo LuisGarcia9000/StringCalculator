@@ -2,11 +2,11 @@
 export function calc(stringOperation) {
     console.log('stringOperation', stringOperation)
     let total = 0
-    let result = sum(stringOperation)
+    let result = operation(stringOperation, '+', sumOperation)
     if (result) {
         total += result
     } else {
-        let result = rest(stringOperation)
+        let result = operation(stringOperation, '-', restOperation)
         if (result) {
             total += result 
         }
@@ -14,43 +14,25 @@ export function calc(stringOperation) {
     return total
 }
 
-function sum(stringOperation) {
-    let operationIndex = stringOperation.indexOf('+')
+const sumOperation = (a,b) => a+b
+const restOperation = (a,b) => a-b
+
+function operation(stringOperation, operator, operation) {
+    let operationIndex = stringOperation.indexOf(operator)
     if (operationIndex > 0) {
         let operationValues = getOperationValues(stringOperation, operationIndex)        
         if (!Number.isNaN(operationValues.valor1AsNumber)
             && !Number.isNaN(operationValues.valor2AsNumber)) {                
-            return operationValues.valor1AsNumber + operationValues.valor2AsNumber
+            return operation(operationValues.valor1AsNumber, operationValues.valor2AsNumber)
         } else if (!Number.isNaN(operationValues.valor1AsNumber)
             && Number.isNaN(operationValues.valor2AsNumber)) {                
-                return operationValues.valor1AsNumber + calc(operationValues.valor2AsString)
+                return operation(operationValues.valor1AsNumber, calc(operationValues.valor2AsString))
             }else if (Number.isNaN(operationValues.valor1AsNumber)
             && !Number.isNaN(operationValues.valor2AsNumber)) {                
-                return calc(operationValues.valor1AsString) + operationValues.valor2AsNumber
+                return operation(calc(operationValues.valor1AsString), operationValues.valor2AsNumber)
         }
         else {            
-            return calc(operationValues.valor1AsString) + calc(operationValues.valor2AsString)
-        }
-    }
-    return 0
-}
-
-function rest(stringOperation) {
-    let operationIndex = stringOperation.indexOf('-')
-    if (operationIndex > 0) {
-        let operationValues = getOperationValues(stringOperation, operationIndex)        
-        if (!Number.isNaN(operationValues.valor1AsNumber)
-            && !Number.isNaN(operationValues.valor2AsNumber)) {
-            return operationValues.valor1AsNumber - operationValues.valor2AsNumber
-        } else if (!Number.isNaN(operationValues.valor1AsNumber)
-            && Number.isNaN(operationValues.valor2AsNumber)) {
-                return operationValues.valor1AsNumber - calc(operationValues.valor2AsString)
-            }else if (Number.isNaN(operationValues.valor1AsNumber)
-            && !Number.isNaN(operationValues.valor2AsNumber)) {
-                return calc(operationValues.valor1AsString) - operationValues.valor2AsNumber
-        }
-        else {
-            return calc(operationValues.valor1AsString) - calc(operationValues.valor2AsString)
+            return operation(calc(operationValues.valor1AsString), calc(operationValues.valor2AsString))
         }
     }
     return 0
