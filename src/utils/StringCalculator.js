@@ -2,23 +2,30 @@
 export function calc(stringOperation) {
     console.log('stringOperation', stringOperation)
     let total = 0
-    let result = operation(stringOperation, '+', sumOperation)
+    let result = operation(stringOperation, '+', addition)
     if (result) {
         total += result
     } else {
-        let result = operation(stringOperation, '-', restOperation)
+        let result = operation(stringOperation, '-', substraction)
         if (result) {
             total += result 
+        } 
+        else {
+            let result = operation(stringOperation, '/', division)
+            if (result) {
+                total += result 
+            }
         }
     }
     return total
 }
 
-const sumOperation = (a,b) => a+b
-const restOperation = (a,b) => a-b
+const addition = (a,b) => a+b
+const substraction = (a,b) => a-b
+const division = (a,b) => a/b
 
 function operation(stringOperation, operator, operation) {
-    let operationIndex = stringOperation.indexOf(operator)
+    let operationIndex = stringOperation.lastIndexOf(operator)
     if (operationIndex > 0) {
         let operationValues = getOperationValues(stringOperation, operationIndex)        
         if (!Number.isNaN(operationValues.valor1AsNumber)
