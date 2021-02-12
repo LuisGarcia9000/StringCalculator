@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  TextInput,
 } from 'react-native';
 
 import {
@@ -24,7 +25,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {calc} from './src/utils/StringCalculator'
+
 const App: () => React$Node = () => {
+
+  const [result, setResult] = useState(0)
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -32,7 +38,7 @@ const App: () => React$Node = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
+          
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
@@ -40,31 +46,20 @@ const App: () => React$Node = () => {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
+              <View style={[styles.center, {marginBottom:20}]}>
+                <Text style={styles.sectionTitle}>Calculadora	de Cadenas: </Text>
+                <Text style={styles.sectionTitle}>+, -, /, * y ^</Text>
+              </View>
+              <TextInput 
+                style={{borderWidth:0.5, borderColor:'gray'}}
+                placeholder="Ej. 4-7+8+9/2*3"                
+                maxLength={20}                
+                onSubmitEditing={(event) => setResult(calc(event.nativeEvent.text))}
+              />
               <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
+                Resultado <Text style={styles.highlight}>{result}</Text>
               </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+            </View>            
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -109,6 +104,10 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
+  center: {
+    justifyContent:'center',
+    alignItems:'center'
+  }
 });
 
 export default App;
