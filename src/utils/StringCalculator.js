@@ -9,11 +9,15 @@ export function calc(stringOperation) {
         let result = operation(stringOperation, '-', substraction)
         if (result) {
             total += result 
-        } 
-        else {
+        } else {
             let result = operation(stringOperation, '/', division)
             if (result) {
                 total += result 
+            } else {
+                let result = operation(stringOperation, '*', multiplication)
+                if (result) {
+                    total += result 
+                }
             }
         }
     }
@@ -23,6 +27,7 @@ export function calc(stringOperation) {
 const addition = (a,b) => a+b
 const substraction = (a,b) => a-b
 const division = (a,b) => a/b
+const multiplication = (a,b) => a*b
 
 function operation(stringOperation, operator, operation) {
     let operationIndex = stringOperation.lastIndexOf(operator)
